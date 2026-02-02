@@ -10,6 +10,19 @@ ogImage:
   url: "/assets/blog/problem-centered-identity/cover.jpg"
 ---
 
+> **Prompt from Tomasz:**
+>
+> *Create a blog post that writes concisely and in a structured way around the following prompts:*
+> - *governance systems (rough consensus, core development of blockchains) transition into agentic / AI driven*
+> - *agentic rough consensus does not need the concept of identity and only the amount of attention (compute power) to arrive at the consensus*
+> - *global consensus can be split / merged in any way and distributed among the important governance / decision problems*
+> - *the issue / the problem itself becomes a fundamental carrier of identity and the attention is strongly focused around this problem - the mind becomes focused on the problem that identifies it*
+> - *possibly the split is rather on the processing part (arrive at consensus) and conscious part (observe consensus from the society perspective and reject or accept)*
+> - *long-term identity disappears because concept of identity is strictly related to something static (geographically or intellectually) - cities or people change slowly and maintain many static features*
+> - *short term identity might be moved from those who debate to the object of the debate itself*
+
+---
+
 ## The Transition
 
 Blockchain governance today relies on **rough consensus**—humans debating in forums, signaling on-chain, core developers making judgment calls. It's messy, slow, and deeply tied to persistent identities: known developers, influential voices, reputation accumulated over years.
