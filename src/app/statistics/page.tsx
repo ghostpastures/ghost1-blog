@@ -3,6 +3,7 @@ import { getAllPosts } from "@/lib/api";
 import Container from "@/app/_components/container";
 import Header from "@/app/_components/header";
 import { StatsTable } from "./stats-table";
+import { Redis } from "@upstash/redis";
 
 export const metadata: Metadata = {
   title: "Statistics",
@@ -11,21 +12,31 @@ export const metadata: Metadata = {
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
+// Initialize Redis client directly (same as API route)
+const redis = process.env.UPSTASH_REDIS_REST_URL
+  ? new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+    })
+  : null;
+
 async function getViewCounts(): Promise<Record<string, number>> {
+  if (!redis) {
+    return {};
+  }
+
   try {
-    const baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const keys = await redis.keys("views:*");
+    const views: Record<string, number> = {};
 
-    const res = await fetch(`${baseUrl}/api/views`, {
-      next: { revalidate: 60 },
-    });
+    for (const key of keys) {
+      const postSlug = key.replace("views:", "");
+      views[postSlug] = (await redis.get<number>(key)) || 0;
+    }
 
-    if (!res.ok) return {};
-
-    const data = await res.json();
-    return data.views || {};
-  } catch {
+    return views;
+  } catch (error) {
+    console.error("Error fetching views from Redis:", error);
     return {};
   }
 }
